@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const OutOfStockProduct = require("./model");
+const MarketsProducts = require("./model");
 
 const router = new Router();
 
@@ -10,7 +10,7 @@ router.post("/oos", (req, res, next) => {
     status: req.body.status
   };
 
-  OutOfStockProduct.create(product)
+  MarketsProducts.create(product)
     .then(product => {
       res.json(product);
     })

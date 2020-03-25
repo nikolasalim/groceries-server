@@ -1,9 +1,9 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
 const Product = require("../product/model");
-const OutOfStockProduct = require("../out-of-stock-product/model");
+const MarketsProducts = require("../MarketProduct/model");
 
-const Market = db.define("Market", {
+const Market = db.define("market", {
   name: {
     type: Sequelize.STRING,
     allowNull: false
@@ -19,16 +19,17 @@ const Market = db.define("Market", {
 });
 
 Market.belongsToMany(Product, {
-  through: "Out of Stock Product",
+  as: "oosProducts",
+  through: "markets_product",
   foreignKey: "marketId"
 });
 
 Product.belongsToMany(Market, {
-  through: "Out of Stock Product",
+  through: "markets_product",
   foreignKey: "productId"
 });
 
-OutOfStockProduct.belongsTo(Market, { foreignKey: "marketId" });
-OutOfStockProduct.belongsTo(Product, { foreignKey: "productId" });
+MarketsProducts.belongsTo(Market, { foreignKey: "marketId" });
+MarketsProducts.belongsTo(Product, { foreignKey: "productId" });
 
 module.exports = Market;
