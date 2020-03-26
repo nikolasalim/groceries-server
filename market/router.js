@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const Market = require("./model");
 const { Op } = require("sequelize");
+// const Product = require("../Product/model");
 
 const router = new Router();
 
@@ -66,13 +67,26 @@ router.get("/market", (req, res, next) => {
 //     .catch(next);
 // });
 
-// Updating which products are out of stock in which markets
+// Updating which products are out of stock for a specific market
 
 router.put("/:marketId/product", (req, res, next) => {
   Market.findByPk(req.params.marketId)
 
     .then(market =>
       market.addOosProducts(req.body.productId, {
+        through: { status: req.body.status }
+      })
+    )
+    .then(res.send.bind(res))
+
+    .catch(next);
+});
+
+router.get("/:marketId/product", (req, res, next) => {
+  Market.findByPk(req.params.marketId)
+
+    .then(market =>
+      market.getOosProducts(req.body.productId, {
         through: { status: req.body.status }
       })
     )
