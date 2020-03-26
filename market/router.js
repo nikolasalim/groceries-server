@@ -67,6 +67,24 @@ router.get("/market", (req, res, next) => {
 //     .catch(next);
 // });
 
+// Reading products from a specific market
+
+router.get("/:marketId/product", (req, res, next) => {
+  Market.findByPk(req.params.marketId)
+
+    .then(market =>
+      market.getOosProducts(req.body.productId, {
+        through: { status: req.body.status }
+      })
+    )
+    .then(data => {
+      res.send(data);
+    })
+    // .then(res.send.bind(res))
+
+    .catch(next);
+});
+
 // Updating which products are out of stock for a specific market
 
 router.put("/:marketId/product", (req, res, next) => {
@@ -77,20 +95,26 @@ router.put("/:marketId/product", (req, res, next) => {
         through: { status: req.body.status }
       })
     )
-    .then(res.send.bind(res))
+    .then(data => {
+      res.send(data);
+    })
 
     .catch(next);
 });
 
-router.get("/:marketId/product", (req, res, next) => {
+// Removing product
+
+router.delete("/:marketId/product/:productId", (req, res, next) => {
+  console.log("router.delete is running");
+
   Market.findByPk(req.params.marketId)
 
     .then(market =>
-      market.getOosProducts(req.body.productId, {
+      market.removeOosProducts(req.params.productId, {
         through: { status: req.body.status }
       })
     )
-    .then(res.send.bind(res))
+    .then(res.json(req.params.productId))
 
     .catch(next);
 });
