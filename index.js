@@ -5,6 +5,10 @@ const marketRouter = require("./Market/router");
 const productRouter = require("./Product/router");
 const MarketsProducts = require("./MarketProduct/router");
 
+const cors = require("cors");
+const corsMiddleware = cors();
+app.use(corsMiddleware);
+
 const jsonParser = express.json();
 app.use(jsonParser);
 
