@@ -1,23 +1,23 @@
 const Market = require("../Market/model");
-const Product = require("../product/model");
+const Product = require("../Product/model");
 
 async function seedMarketAndProducts() {
-  const albertHeijn = await Market.create({
-    name: "Albert Heijn",
-    latitude: 123,
-    longitude: 321
+  const albertHeijn1 = await Market.create({
+    name: "AH Jan Van Galenstraat",
+    latitude: 52.374886,
+    longitude: 4.861366
   });
 
-  const jumbo = await Market.create({
-    name: "Jumbo",
-    latitude: 456,
-    longitude: 654
+  const albertHeijn2 = await Market.create({
+    name: "AH Jan Evertseenstraat",
+    latitude: 52.371952,
+    longitude: 4.85716
   });
 
-  const dirk = await Market.create({
-    name: "Dirk",
-    latitude: 789,
-    longitude: 987
+  const albertHeijn3 = await Market.create({
+    name: "AH Postjesweg",
+    latitude: 52.364195,
+    longitude: 4.855149
   });
 
   const toiletPaper = await Product.create({
@@ -36,21 +36,19 @@ async function seedMarketAndProducts() {
     name: "Canned Tuna"
   });
 
-  // albertHeijn.addOosProducts(toiletPaper);
-
-  albertHeijn.addOosProducts(toiletPaper, {
+  albertHeijn1.addOosProducts(toiletPaper, {
     through: { status: "Moderate" }
   });
 
-  albertHeijn.addOosProducts(cannedTuna, {
+  albertHeijn1.addOosProducts(cannedTuna, {
     through: { status: "Out of Stock" }
   });
 
-  dirk.addOosProducts(sunflowerOil, {
+  albertHeijn2.addOosProducts(sunflowerOil, {
     through: { status: "Out of Stock" }
   });
 
-  jumbo.addOosProducts(pasta, {
+  albertHeijn3.addOosProducts(pasta, {
     through: { status: "Moderate" }
   });
 }

@@ -9,11 +9,11 @@ const Market = db.define("market", {
     allowNull: false
   },
   latitude: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.DECIMAL,
     allowNull: false
   },
   longitude: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.DECIMAL,
     allowNull: false
   }
 });
