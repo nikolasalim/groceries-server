@@ -6,7 +6,8 @@ const MarketsProducts = require("../MarketProduct/model");
 const Market = db.define("market", {
   name: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   latitude: {
     type: Sequelize.DECIMAL,
