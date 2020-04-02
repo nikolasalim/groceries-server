@@ -28,7 +28,10 @@ router.post("/market", (req, res, next) => {
 router.get("/market", (req, res, next) => {
   const isEmpty = !Object.keys(req.query).length;
   if (isEmpty) {
-    Market.findAll({ include: [{ all: true }] })
+    Market.findAll({
+      include: [{ model: Product, as: "oosProducts" }],
+      order: [["id", "DESC"]]
+    })
       .then(market => {
         res.json(market);
       })
@@ -36,85 +39,13 @@ router.get("/market", (req, res, next) => {
   } else {
     Market.findAll(
       { where: { name: { [Op.iLike]: "%" + req.query.searched + "%" } } },
-      { include: [{ all: true }] }
+      { include: [{ model: Product, as: "oosProducts" }] }
     )
       .then(market => {
         res.json(market);
       })
       .catch(next);
   }
-});
-
-// Reading products from a specific market
-
-router.get("/:marketId/product", (req, res, next) => {
-  const isEmpty = !Object.keys(req.query).length;
-
-  if (isEmpty) {
-    Market.findByPk(req.params.marketId)
-      .then(market =>
-        market.getOosProducts(req.body.productId, {
-          through: { status: req.body.status }
-        })
-      )
-      .then(data => {
-        res.send(data);
-      })
-      // .then(res.send.bind(res))
-
-      .catch(next);
-  } else {
-    Market.findByPk(req.params.marketId, {
-      include: {
-        model: Product,
-        as: "oosProducts",
-        where: { name: { [Op.iLike]: "%" + req.query.searched + "%" } }
-      }
-    })
-      .then(market => {
-        console.log(
-          "market.dataValues.oosProducts is:",
-          market.dataValues.oosProducts
-        );
-        res.send(market.dataValues.oosProducts);
-      })
-
-      .catch(next);
-  }
-});
-
-// Updating which products are out of stock for a specific market
-
-router.put("/:marketId/product/:productId", (req, res, next) => {
-  Market.findByPk(req.params.marketId)
-
-    .then(market =>
-      market.addOosProducts(req.params.productId, {
-        through: { status: req.body.status }
-      })
-    )
-    .then(data => {
-      res.send(data);
-    })
-
-    .catch(next);
-});
-
-// Removing product
-
-router.delete("/:marketId/product/:productId", (req, res, next) => {
-  console.log("router.delete is running");
-
-  Market.findByPk(req.params.marketId)
-
-    .then(market =>
-      market.removeOosProducts(req.params.productId, {
-        through: { status: req.body.status }
-      })
-    )
-    .then(res.json(req.params.productId))
-
-    .catch(next);
 });
 
 // Reading fetched searched markets results
