@@ -13,4 +13,6 @@ const MarketsProducts = db.define("markets_product", {
   }
 });
 
+console.log("TESTING");
+
 module.exports = MarketsProducts;
