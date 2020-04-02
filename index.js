@@ -1,9 +1,9 @@
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 4000;
-const marketRouter = require("./Market/router");
-const productRouter = require("./Product/router");
-const marketsProducts = require("./MarketProduct/router");
+const marketRouter = require("./market/router");
+const productRouter = require("./product/router");
+const marketsProducts = require("./marketproduct/router");
 
 const cors = require("cors");
 const corsMiddleware = cors();

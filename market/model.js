@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
-const Product = require("../Product/model");
-const MarketsProducts = require("../MarketProduct/model");
+const Product = require("../product/model");
+const MarketsProducts = require("../marketproduct/model");
 
 const Market = db.define("market", {
   name: {

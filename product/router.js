@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const Product = require("./model");
-const Market = require("../Market/model");
+const Market = require("../market/model");
 
 const router = new Router();
 
