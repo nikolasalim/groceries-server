@@ -2,7 +2,6 @@ const { Router } = require("express");
 const Market = require("./model");
 const { Op } = require("sequelize");
 const Product = require("../Product/model");
-const MarketsProducts = require("../MarketProduct/model");
 const superagent = require("superagent");
 
 const router = new Router();
